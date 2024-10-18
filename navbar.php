@@ -4,10 +4,17 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link text-white active" aria-current="page" href="./Index.php">Accueil</a>
+                    <a style="margin-right: 5px;" class="nav-link text-white active" aria-current="page"
+                        href="./Index.php">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Programmation</a>
+                    <a style="margin-left: 5px;" class="nav-link text-white" href="#">Programmation</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a style="margin-right: 5px;" class="nav-link text-white active" aria-current="page"
+                        href="./Connexion.php">Se Connecter</a>
                 </li>
             </ul>
         </div>

@@ -14,7 +14,7 @@
     <?php require_once './navbar.php' ?>
 
     <!--- Main Container --->
-    <div class="login-container d-flex justify-content-center align-items-center min-vh-100">
+    <div style="min-height: 90vh !important;" class="login-container d-flex justify-content-center align-items-center">
         <div class="row border rounded-5 p-3 bg-white shadow box-area">
 
             <!--- Right Box --->
@@ -26,7 +26,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control form-control-lg bg-light fs-6"
-                            placeholder="Email address">
+                            placeholder="Adresse Email">
                     </div>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control form-control-lg bg-light fs-6" placeholder="Nom">

@@ -14,7 +14,7 @@
     <?php require_once './navbar.php' ?>
 
     <!--- Main Container --->
-    <div class="login-container d-flex justify-content-center align-items-center min-vh-100">
+    <div style="min-height: 90vh !important;" class="login-container d-flex justify-content-center align-items-center">
         <div class="row border rounded-5 p-3 bg-white shadow box-area">
             <!--- Left Box --->
             <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
@@ -57,7 +57,7 @@
                         <button class="btn btn-lg btn-primary w-100 fs-6">Se Connecter</button>
                     </div>
                     <div class="row">
-                        <small>Vous n'avez pas de compte ? <a href="#">S'inscrire</a></small>
+                        <small>Vous n'avez pas de compte ? <a href="./Inscription.php">S'inscrire</a></small>
                     </div>
                 </div>
             </div>
