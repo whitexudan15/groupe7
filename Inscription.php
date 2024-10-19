@@ -42,7 +42,6 @@ $message = ''; //Variables de message de success
             $query = $pdo->prepare("INSERT INTO utilisateur (nom, prenom, email, role, profil, mdp) VALUES (?, ?, ?, ?, ?, ?)");
             $query->execute([$nom, $prenom, $email, $role, basename($profil['name']), $mdp]); 
             $message = "Inscription réussie!";
-            echo basename($profil['name']);
         }
         
     }else {
@@ -60,6 +59,8 @@ $message = ''; //Variables de message de success
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cours - Programmation</title>
     <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
 </head>
 
@@ -74,14 +75,15 @@ $message = ''; //Variables de message de success
         Swal.fire({
             icon: 'error',
             title: 'Erreur',
-            text: '<?php echo $error; ?>',
+            text: <?php echo json_encode($error); ?>,
             customClass: 'custom-swal',
-            backdrop: `rgba(0,0,80,0.95)
-                        center
-                        no-repeat`
+            backdrop: `rgb(26, 26, 174, 0.95)
+                    center
+                    no-repeat`
         });
         </script>
-        <div class="" style="color:red; text-transform:uppercase;">
+        <div class="d-flex align-items-end justify-content-center"
+            style="color:red; text-transform:uppercase; margin: 5px; font-weight: 600;">
             <p class="text-center">
                 <?php echo $error; ?>
             </p>
@@ -91,21 +93,22 @@ $message = ''; //Variables de message de success
         Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: '<?php echo $message; ?>',
-            customClass: 'custom-swal',
-            backdrop: `rgba(0,0,80,0.95)
-                        center
-                        no-repeat`
+            text: <?php echo json_encode($message); ?>,
+            customClass: 'custom-swal2',
+            backdrop: `rgb(26, 26, 174, 0.95)
+                    center
+                    no-repeat`
         });
         </script>
-        <div class="" style="color:green; text-transform:uppercase;">
+        <div class="" style="color:green; text-transform:uppercase; margin: 5px; font-weight: 600;">
             <p class="text-center">
                 <?php echo $message; ?>
             </p>
         </div>
         <?php endif; ?>
+
         <!--- Main Container --->
-        <div style="min-height: 95vh !important;"
+        <div style="min-height: 85vh !important;"
             class="login-container d-flex justify-content-center align-items-center">
 
             <div class="row border rounded-5 p-3 bg-white shadow box-area">
@@ -126,7 +129,7 @@ $message = ''; //Variables de message de success
                 <!--- Right Box --->
                 <div class="col-md-6 right-box">
                     <div class="row align-items-center">
-                        <div style="color: rgb(26, 26, 174);" class="header-text mb-2 text-center">
+                        <div class="header-text mb-2 text-center">
                             <h2 style="font-weight: 900;">Créer un compte</h2>
                             <p>Inscrivez-vous ici</p>
                         </div>
@@ -168,7 +171,6 @@ $message = ''; //Variables de message de success
         </div>
     </form>
     <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

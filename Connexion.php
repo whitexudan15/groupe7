@@ -41,7 +41,7 @@ $message = '';
                 <!--- Right Box --->
                 <div class="col-md-6 right-box">
                     <div class="row align-items-center">
-                        <div style="color: rgb(26, 26, 174);" class="header-text mb-2 text-center">
+                        <div class="header-text mb-2 text-center">
                             <h2 style="font-weight: 900;">Bienvenue</h2>
                             <p>Connectez-vous</p>
                         </div>
