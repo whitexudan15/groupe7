@@ -62,7 +62,7 @@
 
 
                         <div class="input-group">
-                            <button name="envoyer" value="modifier"
+                            <button name="action" value="modifier"
                                 class="btn btn-lg btn-primary w-100 fs-6">Valider</button>
                         </div>
                     </div>
