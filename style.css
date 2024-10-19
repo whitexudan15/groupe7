@@ -25,6 +25,7 @@ body {
   margin-left: auto;
   padding-left: 15%;
   padding-right: 15%;
+  flex-direction: column;
 }
 
 .program-container {

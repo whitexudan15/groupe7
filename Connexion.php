@@ -1,9 +1,46 @@
-<?php 
-echo password_hash("admin", PASSWORD_DEFAULT);
+<?php
+session_start();
+require_once("./Base_De_Donnees.php");
+$error = '';
+$message = isset($_GET['message']) ? $_GET['message'] : ''; // Récupérer le message de success
 
-$correctAdminEmail = '$2y$10$VnMmIjDSiYQtr5twx5nGt.Xgk2x6W4bGFlQQ8ZN26EagxkNFrmMUu';
-$correctAdminPassword = '$2y$10$tewdtleWdBwvc0TE4e/73.ihz73/f8xMjwIjiZ433cGnSFjoWYhs.';
-$message = '';
+if (isset($_POST["connecter"])) {
+    // Validation des champs du formulaire
+    $email = isset($_POST["email"]) ? htmlspecialchars($_POST["email"]) : '';
+    $mdp = isset($_POST["mdp"]) ? htmlspecialchars($_POST["mdp"]) : '';
+
+    if (!empty($email) && !empty($mdp)){
+        //Vérifier si l'utilisateur existe
+        $checkIfUserExists = $pdo->prepare("SELECT * FROM utilisateur WHERE email = ?");
+        $checkIfUserExists->execute([$email]);
+
+        if ($checkIfUserExists->rowCount() == 1) {
+            $infosUtilisateurs = $checkIfUserExists->fetch();
+            // Stockage d'informations sur l'utilisateur dans les sessions
+
+             //Vérifier  si le mot de pass est correct
+             if(password_verify($mdp, $infosUtilisateurs['mdp'])){
+                $_SESSION['auth'] = true;
+                $_SESSION['email'] = $infosUtilisateurs['email'];
+                $_SESSION['role'] = $infosUtilisateurs['role'];
+                $_SESSION['nom'] = $infosUtilisateurs['nom'];
+                $_SESSION['prenom'] = $infosUtilisateurs['prenom'];
+                $_SESSION['profil'] = $infosUtilisateurs['profil'];
+                $message = "Connecté";
+                header('Location: index.php?message='. $message);
+                exit();
+            } else {
+                $error = "Mot de passe incorrect.";
+            }
+        }else {
+            # code...
+            $error = "Email inconnu.";
+        }
+    }else {
+        # code...
+        $error = "Veuillez remplir tous les champs.";
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -14,6 +51,7 @@ $message = '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cours - Programmation</title>
     <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -22,8 +60,46 @@ $message = '';
     <?php require_once './navbar.php' ?>
     <form action="" method="post">
         <!--- Main Container --->
-        <div style="min-height: 90vh !important;"
-            class="login-container d-flex justify-content-center align-items-center">
+        <div style="margin-top: 3%;" class="login-container d-flex justify-content-center align-items-center">
+            <div class="row">
+                <!--Affichage du popup d'erreur-->
+                <?php if ($message): ?>
+                <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: <?php echo json_encode($message); ?>,
+                    customClass: 'custom-swal2',
+                    backdrop: `rgb(26, 26, 174, 0.95)
+                    center
+                    no-repeat`
+                });
+                </script>
+                <div class="" style="color:green; margin: 5px;margin-top: 15px; font-weight: 600;">
+                    <p class="text-center">
+                        <?php echo $message . "<br> Connectez-vous!"; ?>
+                    </p>
+                </div>
+                <?php elseif($error): ?>
+                <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: <?php echo json_encode($error); ?>,
+                    customClass: 'custom-swal',
+                    backdrop: `rgb(26, 26, 174, 0.95)
+                    center
+                    no-repeat`
+                });
+                </script>
+                <div class="" style="color:red; margin: 5px;margin-top: 15px; font-weight: 600;">
+                    <p class="text-center">
+                        <?php echo $error ?>
+                    </p>
+                </div>
+                <?php endif; ?>
+
+            </div>
             <div class="row border rounded-5 p-3 bg-white shadow box-area">
                 <!--- Left Box --->
                 <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"

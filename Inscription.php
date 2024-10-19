@@ -38,10 +38,17 @@ $message = ''; //Variables de message de success
         if ($uploadOk === 0){
             $error = $error . "<br> Téléchargement de profil échoué...";
         } elseif (move_uploaded_file($profil['tmp_name'], $target_file)) {
-            // Utilisez seulement le nom de fichier pour l'insertion dans la base de données
-            $query = $pdo->prepare("INSERT INTO utilisateur (nom, prenom, email, role, profil, mdp) VALUES (?, ?, ?, ?, ?, ?)");
-            $query->execute([$nom, $prenom, $email, $role, basename($profil['name']), $mdp]); 
-            $message = "Inscription réussie!";
+            //Verifer si l'User existe déjà sur le site
+            $checkIfUserIsAlreadyExists = $pdo->prepare('SELECT email FROM utilisateur WHERE email = ?');
+            $checkIfUserIsAlreadyExists->execute(array($email));
+            if ($checkIfUserIsAlreadyExists->rowCount() == 0) {
+                $query = $pdo->prepare("INSERT INTO utilisateur (nom, prenom, email, role, profil, mdp) VALUES (?, ?, ?, ?, ?, ?)");
+                $query->execute([$nom, $prenom, $email, $role, basename($profil['name']), $mdp]); 
+                $message = "Inscription réussie! ";
+                header("Location: Connexion.php?message=" . $message);
+            }else{
+                $error = "Email déjà utilisé.";
+            }
         }
         
     }else {
@@ -69,50 +76,34 @@ $message = ''; //Variables de message de success
     <?php require_once './navbar.php' ?>
 
     <form action="" method="post" enctype="multipart/form-data">
-        <!--Affichage du popup d'erreur-->
-        <?php if ($error): ?>
-        <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Erreur',
-            text: <?php echo json_encode($error); ?>,
-            customClass: 'custom-swal',
-            backdrop: `rgb(26, 26, 174, 0.95)
-                    center
-                    no-repeat`
-        });
-        </script>
-        <div class="d-flex align-items-end justify-content-center"
-            style="color:red; text-transform:uppercase; margin: 5px; font-weight: 600;">
-            <p class="text-center">
-                <?php echo $error; ?>
-            </p>
-        </div>
-        <?php elseif($message): ?>
-        <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: <?php echo json_encode($message); ?>,
-            customClass: 'custom-swal2',
-            backdrop: `rgb(26, 26, 174, 0.95)
-                    center
-                    no-repeat`
-        });
-        </script>
-        <div class="" style="color:green; text-transform:uppercase; margin: 5px; font-weight: 600;">
-            <p class="text-center">
-                <?php echo $message; ?>
-            </p>
-        </div>
-        <?php endif; ?>
 
         <!--- Main Container --->
-        <div style="min-height: 85vh !important;"
-            class="login-container d-flex justify-content-center align-items-center">
+        <div style="margin-top: 3%;" class="login-container d-flex justify-content-center align-items-center">
+
+            <div class="row">
+                <!--Affichage du popup d'erreur-->
+                <?php if ($error): ?>
+                <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: <?php echo json_encode($error); ?>,
+                    customClass: 'custom-swal',
+                    backdrop: `rgb(26, 26, 174, 0.95)
+                    center
+                    no-repeat`
+                });
+                </script>
+                <div class="" style="color:red; margin: 5px;margin-top: 15px; font-weight: 600;">
+                    <p class="text-center">
+                        <?php echo $error; ?>
+                    </p>
+                </div>
+                <?php endif; ?>
+
+            </div>
 
             <div class="row border rounded-5 p-3 bg-white shadow box-area">
-
                 <!--- Left Box --->
                 <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
                     style="background: #103cbe;">
@@ -156,7 +147,7 @@ $message = ''; //Variables de message de success
                             <input class="form-control  form-control-lg bg-light fs-6" name="profil" type="file">
                         </div>
                         <div class="input-group mb-3">
-                            <button name="inscrire" class="btn btn-lg btn-primary w-100 fs-6">S'Inscrire</button>
+                            <button name="inscrire" class="btn btn-lg btn-primary w-100 fs-6">S'inscrire</button>
                         </div>
                         <div class="row">
                             <small class="text-center">Vous avez déjà un compte ? <a href="./Connexion.php">Se

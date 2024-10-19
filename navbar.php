@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-nav">
     <div class="container">
-        <a style="font-weight: 900 !important; font-size: 25px;" class="navbar-brand text-white"
+        <a style="font-weight: 900 !important; font-size: 25px;" class="navbar-brand text-white me-5"
             href="./Index.php">GROUPE7.</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

@@ -1,3 +1,11 @@
+<?php
+session_start();
+$message = isset($_GET['message']) ? $_GET['message'] : '';
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,12 +14,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cours - Programmation</title>
     <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="./style.css?v=<?php echo time(); ?>">
 </head>
 
 <body>
     <?php require_once './navbar.php' ?>
-
+    <!--Affichage du popup d'erreur-->
+    <?php if ($message): ?>
+    <script>
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        text: <?php echo json_encode($message); ?>,
+        customClass: 'custom-swal2',
+        showConfirmButton: false,
+        timer: 1500
+    });
+    </script>
+    <?php endif; ?>
     <div style="min-height: 50vh !important;" class="container d-flex align-items-start justify-content-center mt-5">
         <div class="row border p-3 bg-white shadow w-100">
             <table id="t_article" class="table table-striped w-100">
@@ -105,12 +126,6 @@
 </html>
 
 <!--
-
-
-
- 
-
-
 
 
 -->
