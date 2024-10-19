@@ -13,6 +13,11 @@ body {
   padding-right: 15%;
 }
 
+.program-container {
+  padding-left: 20% !important;
+  padding-right: 20% !important;
+}
+
 .bg-nav {
   background-color: rgb(26, 26, 174) !important;
 }
@@ -23,8 +28,16 @@ body {
 }
 
 /*------------ Right box ------------*/
-.right-box {
-  padding: 40px 30px 40px 40px;
+
+.box-areaProgram {
+  margin: 0 10px;
+}
+.left-boxProgram {
+  height: 100px;
+  overflow: hidden;
+}
+.right-boxProgram {
+  padding: 20px;
 }
 
 /*------------ Custom Placeholder ------------*/
@@ -37,6 +50,23 @@ body {
 }
 .rounded-5 {
   border-radius: 30px;
+}
+
+.modifier::after {
+  content: "MISE A JOUR";
+  position: absolute;
+  top: 30%;
+  color: #e0ffff;
+  font-weight: 900;
+  font-size: 25px;
+}
+.programmer::after {
+  content: "PROGRAMMER";
+  position: absolute;
+  top: 30%;
+  color: #e0ffff;
+  font-weight: 900;
+  font-size: 25px;
 }
 
 /*------------ For small screens------------*/

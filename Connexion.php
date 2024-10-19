@@ -20,7 +20,7 @@
             <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
                 style="background: #103cbe;">
                 <div class="featured-image mb-3">
-                    <img src="./images/1.png" class="img-fluid" style="width: 250px;">
+                    <img src="./images/cours.png" class="img-fluid" style="width: 250px;">
                 </div>
                 <p class="text-white fs-2" style="font-family: 'Courier New', Courier, monospace; font-weight: 600;">
                     GROUPE 7</p>
@@ -31,17 +31,17 @@
             <!--- Right Box --->
             <div class="col-md-6 right-box">
                 <div class="row align-items-center">
-                    <div class="header-text mb-4 text-center">
-                        <h2>Bienvenue</h2>
-                        <p>Connectez-vous ici</p>
+                    <div style="color: rgb(26, 26, 174);" class="header-text mb-2 text-center">
+                        <h2 style="font-weight: 900;">Bienvenue</h2>
+                        <p>Connectez-vous</p>
                     </div>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control form-control-lg bg-light fs-6"
-                            placeholder="Email address">
+                            placeholder="Adresse Email">
                     </div>
                     <div class="input-group mb-1">
                         <input type="password" class="form-control form-control-lg bg-light fs-6"
-                            placeholder="Password">
+                            placeholder="Mot De Passe">
                     </div>
                     <div class="input-group mb-5 d-flex justify-content-between">
                         <div class="form-check">
@@ -57,7 +57,8 @@
                         <button class="btn btn-lg btn-primary w-100 fs-6">Se Connecter</button>
                     </div>
                     <div class="row">
-                        <small>Vous n'avez pas de compte ? <a href="./Inscription.php">S'inscrire</a></small>
+                        <small class="text-center">Vous n'avez pas de compte ? <a
+                                href="./Inscription.php">S'inscrire</a></small>
                     </div>
                 </div>
             </div>
