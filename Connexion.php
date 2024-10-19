@@ -1,3 +1,11 @@
+<?php 
+echo password_hash("admin", PASSWORD_DEFAULT);
+
+$correctAdminEmail = '$2y$10$VnMmIjDSiYQtr5twx5nGt.Xgk2x6W4bGFlQQ8ZN26EagxkNFrmMUu';
+$correctAdminPassword = '$2y$10$tewdtleWdBwvc0TE4e/73.ihz73/f8xMjwIjiZ433cGnSFjoWYhs.';
+$message = '';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 

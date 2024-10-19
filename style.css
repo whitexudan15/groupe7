@@ -5,8 +5,18 @@ body {
   background: #ececec;
 }
 
-small a {
-  color: #8cd1ff;
+/*POPUP D'ERREUR JAVASCRIPT*/
+.custom-swal2 {
+  z-index: 999999999999 !important;
+}
+.custom-swal .swal2-html-container {
+  color: red;
+  font-weight: 800;
+}
+
+.custom-swal2 .swal2-html-container {
+  color: green;
+  font-weight: 800;
 }
 
 .login-container {

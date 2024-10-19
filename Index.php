@@ -43,7 +43,7 @@
                         <td colspan="1"
                             style="background-color:#8cd1ff; border-left: 2px blue solid ; border-bottom: 2px blue solid ;">
                             <div class="details-block">
-                                Enseignant: <br> <span class="details-text-color">Dr. TIEBEKABE Pagdame</span>
+                                Enseignant: <br> <span class="details-text-color">Dr. TIEBEKABE</span>
                             </div>
                         </td>
                         <td colspan="1" style="background-color:#8cd1ff; border-bottom: 2px blue solid ;">
