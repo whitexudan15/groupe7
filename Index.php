@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr style="position:relative; z-index:1;">
                         <td> INF1325</td>
                         <td>INFORMATIQUE</td>
                         <td>3 Crédits / 30H</td>
@@ -72,6 +72,34 @@
 
 
     <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const detailButtons = document.querySelectorAll('#display-details');
+
+        detailButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const detailsRow = this.closest('tr')
+                    .nextElementSibling; // La ligne de détails correspondante
+
+                // Ferme toutes les lignes de détails
+                document.querySelectorAll('.details-row').forEach(row => {
+                    if (row !== detailsRow) {
+                        row.style.display =
+                            'none'; // Cache les autres lignes de détails
+                    }
+                });
+
+                // Alterne l'affichage de la ligne de détails cliquée
+                if (detailsRow.style.display === 'table-row') {
+                    detailsRow.style.display = 'none'; // Cache si elle est déjà affichée
+                } else {
+                    detailsRow.style.display = 'table-row'; // Affiche si elle est cachée
+                    detailsRow.classList.add('fade-in'); // Ajoute la classe pour l'animation
+                }
+            });
+        });
+    });
+    </script>
 </body>
 
 </html>
