@@ -13,7 +13,7 @@
     <?php require_once './navbar.php'?>
     <form action="" method="post"></form>
     <!--- Main Container --->
-    <div style="min-height: 95vh !important;" class="login-container d-flex justify-content-center align-items-center">
+    <div style="min-height: 90vh !important;" class="login-container d-flex justify-content-center align-items-center">
         <div class="row border rounded-5 p-3 bg-white shadow box-area">
 
             <!--- Left Box --->
