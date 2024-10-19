@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-nav mb-3">
+<nav class="navbar navbar-expand-lg bg-nav">
     <div class="container">
         <a style="font-weight: 900 !important; font-size: 25px;" class="navbar-brand text-white"
             href="./Index.php">GROUPE7.</a>

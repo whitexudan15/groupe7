@@ -6,46 +6,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cours - Programmation</title>
     <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css?v=<?php echo time(); ?>">
 </head>
 
 <body>
     <?php require_once './navbar.php' ?>
 
-    <div style="min-height: 50vh !important;" class="container d-flex justify-content-center">
+    <div style="min-height: 50vh !important;" class="container d-flex align-items-start justify-content-center mt-5">
         <div class="row border p-3 bg-white shadow w-100">
             <table id="t_article" class="table table-striped w-100">
-                <thead style="font-size: 20px;">
+                <thead>
                     <tr>
-                        <th>Code</th>
-                        <th>Cours</th>
-                        <th>Crédit/Session</th>
-                        <th>Date de début</th>
-                        <th>Options</th>
+                        <th>CODE</th>
+                        <th>COURS</th>
+                        <th>CREDITS/SESSION</th>
+                        <th>DATE DE DEBUT</th>
+                        <th class="options"><a style="background-color: blue !important; color: #e0ffff;"
+                                class='btn btn-outline-primary btn-xs rounded-0'>Programmer un nouveau cours</a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-
-                    <div class="displayed">
-                        <tr>
-                            <td> INF1325</td>
-                            <td>INFORMATIQUE</td>
-                            <td>3 Crédits / 30H</td>
-                            <td>2024-10-23</td>
-                            <td>
-                                <a class='btn btn-outline-primary btn-xs rounded-0'>Details</a>
-                                <a class='btn btn-warning btn-xs rounded-0'>Modifier</a>
-                                <a class='btn btn-danger btn-xs rounded-0'>Déprogrammer</a>
-                            </td>
-                        </tr>
-                    </div>
-                    <div class="details"></div>
+                    <tr>
+                        <td> INF1325</td>
+                        <td>INFORMATIQUE</td>
+                        <td>3 Crédits / 30H</td>
+                        <td>2024-10-23</td>
+                        <td class="options">
+                            <button type="button" class='btn btn-outline-primary btn-xs rounded-0'
+                                id="display-details">Details</button>
+                            <a class='btn btn-warning btn-xs rounded-0'>Modifier</a>
+                            <a class='btn btn-danger btn-xs rounded-0'>Déprogrammer</a>
+                        </td>
+                    </tr>
+                    <tr class="details-row" id="details">
+                        <td colspan="1"
+                            style="background-color:#8cd1ff; border-left: 2px blue solid ; border-bottom: 2px blue solid ;">
+                            <div class="details-block">
+                                Enseignant: <br> <span class="details-text-color">Dr. TIEBEKABE Pagdame</span>
+                            </div>
+                        </td>
+                        <td colspan="1" style="background-color:#8cd1ff; border-bottom: 2px blue solid ;">
+                            <div class="details-block">
+                                Heure de cours: <br> <span class="details-text-color">7H00</span>
+                            </div>
+                        </td>
+                        <td colspan="1" style="background-color:#8cd1ff; border-bottom: 2px blue solid ;">
+                            <div class="details-block">
+                                Type: <br> <span class="details-text-color">Présentiel</span>
+                            </div>
+                        </td>
+                        <td colspan="2"
+                            style="background-color:#8cd1ff; border-right: 2px blue solid ; border-bottom: 2px blue solid ;">
+                            <div class="details-block">
+                                Description: <br> <span class="details-text-color">Détails sur le cours INF2345 :
+                                    Algorithmes avancés, tri, recherche,
+                                    etc.</span>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
+
     <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
+
+<!--
+
+
+
+ 
+
+
+
+
+-->

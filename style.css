@@ -5,6 +5,10 @@ body {
   background: #ececec;
 }
 
+small a {
+  color: #8cd1ff;
+}
+
 .login-container {
   width: 100%;
   margin-right: auto;
@@ -67,6 +71,49 @@ body {
   color: #e0ffff;
   font-weight: 900;
   font-size: 25px;
+}
+.options {
+  text-align: right;
+}
+
+.details-text-color {
+  color: green;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%); /* Commence en dehors de l'écran en haut */
+    opacity: 0; /* Invisible au début */
+  }
+  to {
+    transform: translateY(0); /* Se déplace à sa position d'origine */
+    opacity: 1; /* Devient visible */
+  }
+}
+
+.details-row {
+  transition: all 0.5s ease ease-in-out;
+  -webkit-transition: all 0.5s ease ease-in-out;
+  -moz-transition: all 0.5s ease ease-in-out;
+  -ms-transition: all 0.5s ease ease-in-out;
+  -o-transition: all 0.5s ease ease-in-out;
+  animation: slideDown 1s ease-in-out forwards ease;
+  -webkit-animation: slideDown 1s ease-in-out forwards ease;
+}
+
+table,
+th,
+td {
+  border-collapse: collapse;
+}
+
+table {
+  width: 100%;
+}
+
+th,
+td {
+  text-align: left;
 }
 
 /*------------ For small screens------------*/
