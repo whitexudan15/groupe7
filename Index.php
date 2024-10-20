@@ -1,7 +1,10 @@
 <?php
 session_start();
+if (!isset($_SESSION['auth'])) {
+    header('Location: Connexion.php');
+    exit();
+}
 $message = isset($_GET['message']) ? $_GET['message'] : '';
-
 
 ?>
 
@@ -38,12 +41,17 @@ $message = isset($_GET['message']) ? $_GET['message'] : '';
             <table id="t_article" class="table table-striped w-100">
                 <thead>
                     <tr>
-                        <th>CODE</th>
-                        <th>COURS</th>
-                        <th>CREDITS/SESSION</th>
-                        <th>DATE DE DEBUT</th>
-                        <th class="options"><a style="background-color: blue !important; color: #e0ffff;"
+                        <th style="color:red;">CODE</th>
+                        <th style="color:red;">COURS</th>
+                        <th style="color:red;">CREDITS/SESSION</th>
+                        <th style="color:red;">DATE DE DEBUT</th>
+                        <th class="options">
+                            <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+
+                            <a style="background-color: blue !important; color: #e0ffff;"
                                 class='btn btn-outline-primary btn-xs rounded-0'>Programmer un nouveau cours</a>
+
+                            <?php endif;?>
                         </th>
                     </tr>
                 </thead>
@@ -56,8 +64,10 @@ $message = isset($_GET['message']) ? $_GET['message'] : '';
                         <td class="options">
                             <button type="button" class='btn btn-outline-primary btn-xs rounded-0'
                                 id="display-details">Details</button>
+                            <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
                             <a class='btn btn-warning btn-xs rounded-0'>Modifier</a>
                             <a class='btn btn-danger btn-xs rounded-0'>Déprogrammer</a>
+                            <?php endif;?>
                         </td>
                     </tr>
                     <tr class="details-row" id="details">

@@ -150,7 +150,8 @@ $message = ''; //Variables de message de success
                             <button name="inscrire" class="btn btn-lg btn-primary w-100 fs-6">S'inscrire</button>
                         </div>
                         <div class="row">
-                            <small class="text-center">Vous avez déjà un compte ? <a href="./Connexion.php">Se
+                            <small class="text-center" style="font-weight: 600;">Vous avez déjà un compte ? <a
+                                    href="./Connexion.php">Se
                                     Connecter</a></small>
                         </div>
                     </div>

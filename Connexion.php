@@ -60,7 +60,7 @@ if (isset($_POST["connecter"])) {
     <?php require_once './navbar.php' ?>
     <form action="" method="post">
         <!--- Main Container --->
-        <div style="margin-top: 3%;" class="login-container d-flex justify-content-center align-items-center">
+        <div style="min-height: 90vh;" class="login-container d-flex justify-content-center align-items-center">
             <div class="row">
                 <!--Affichage du popup d'erreur-->
                 <?php if ($message): ?>
@@ -143,7 +143,7 @@ if (isset($_POST["connecter"])) {
                             <button name="connecter" class="btn btn-lg btn-primary w-100 fs-6">Se Connecter</button>
                         </div>
                         <div class="row">
-                            <small class="text-center">Vous n'avez pas de compte ? <a
+                            <small class="text-center" style="font-weight: 600;">Vous n'avez pas de compte ? <a
                                     href="./Inscription.php">S'inscrire</a></small>
                         </div>
                     </div>
