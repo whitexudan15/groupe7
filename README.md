@@ -1,12 +1,10 @@
-# Groupe 7
+Projet-Examen - Groupe 7
 
 # Membres :
 
-TAKOUDA Kokou Trésor
-DOTSE Serge
-N'ZONOU Julie
-
-Projet-Examen
+      TAKOUDA Kokou Trésor (Chef)
+      DOTSE Serge
+      N'ZONOU Julie
 
 Une Mini Apllication Web (PHP, AJAX)
 
