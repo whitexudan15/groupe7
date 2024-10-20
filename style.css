@@ -28,6 +28,14 @@ body {
   flex-direction: column;
 }
 
+.custom-container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
 .program-container {
   padding-left: 20% !important;
   padding-right: 20% !important;
@@ -116,7 +124,6 @@ body {
 }
 
 .details-row {
-  display: none; /* Par défaut, la ligne de détails est cachée */
   position: relative; /* Position relative pour pouvoir utiliser z-index */
   z-index: 0; /* Mettre derrière le tr principal */
 }

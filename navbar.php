@@ -37,7 +37,12 @@ if (isset($_POST['deconnecter'])) {
 -->
                 <?php if(isset($_SESSION['auth'])): ?>
                 <li class="nav-item">
-                    <a style="font-weight: 500;" class="nav-link text-white" href="#">
+                    <a class="nav-link text-white d-flex align-items-center" href="#">
+                        <!--
+                        <h5 style="font-weight: 800; padding:6px 5px 0px 0px;"><?=$_SESSION['nom']?>
+                            <?=$_SESSION['prenom']?>
+                        </h5>
+                -->
                         <div
                             style="width: 50px; height: 50px; border-radius: 50%; border: 3px #e0ffff solid; background: transparent; overflow:hidden;">
                             <img src="./profils/<?=$_SESSION['profil']?>" class="img-fluid" alt="profil"

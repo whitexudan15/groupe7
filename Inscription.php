@@ -39,10 +39,10 @@ $message = ''; //Variables de message de success
             $error = $error . "<br> Téléchargement de profil échoué...";
         } elseif (move_uploaded_file($profil['tmp_name'], $target_file)) {
             //Verifer si l'User existe déjà sur le site
-            $checkIfUserIsAlreadyExists = $pdo->prepare('SELECT email FROM utilisateur WHERE email = ?');
+            $checkIfUserIsAlreadyExists = $pdo->prepare('SELECT email FROM utilisateurs WHERE email = ?');
             $checkIfUserIsAlreadyExists->execute(array($email));
             if ($checkIfUserIsAlreadyExists->rowCount() == 0) {
-                $query = $pdo->prepare("INSERT INTO utilisateur (nom, prenom, email, role, profil, mdp) VALUES (?, ?, ?, ?, ?, ?)");
+                $query = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, email, role, profil, mdp) VALUES (?, ?, ?, ?, ?, ?)");
                 $query->execute([$nom, $prenom, $email, $role, basename($profil['name']), $mdp]); 
                 $message = "Inscription réussie! ";
                 header("Location: Connexion.php?message=" . $message);

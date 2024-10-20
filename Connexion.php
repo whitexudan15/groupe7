@@ -11,7 +11,7 @@ if (isset($_POST["connecter"])) {
 
     if (!empty($email) && !empty($mdp)){
         //Vérifier si l'utilisateur existe
-        $checkIfUserExists = $pdo->prepare("SELECT * FROM utilisateur WHERE email = ?");
+        $checkIfUserExists = $pdo->prepare("SELECT * FROM utilisateurs WHERE email = ?");
         $checkIfUserExists->execute([$email]);
 
         if ($checkIfUserExists->rowCount() == 1) {
@@ -26,8 +26,8 @@ if (isset($_POST["connecter"])) {
                 $_SESSION['nom'] = $infosUtilisateurs['nom'];
                 $_SESSION['prenom'] = $infosUtilisateurs['prenom'];
                 $_SESSION['profil'] = $infosUtilisateurs['profil'];
-                $message = "Connecté";
-                header('Location: index.php?message='. $message);
+                $_SESSION['message'] = "Connecté"; // Le message de sucess à aficher à l'utilisateur
+                header('Location: index.php');
                 exit();
             } else {
                 $error = "Mot de passe incorrect.";

@@ -1,11 +1,31 @@
 <?php
+require_once "./Base_De_Donnees.php";
 session_start();
 if (!isset($_SESSION['auth'])) {
     header('Location: Connexion.php');
     exit();
-}
-$message = isset($_GET['message']) ? $_GET['message'] : '';
+}else {
+    $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
 
+    // Fetch les cours programmées dans la base de donnees
+    $programmation = $pdo->query("SELECT
+        programmation.id, 
+        programmation.cours AS code,
+        programmation.date,
+        programmation.heure,
+        programmation.type,
+        programmation.description,
+        cours.cours AS cours,
+        cours.credits,
+        professeurs.nom AS nomProfesseur,
+        professeurs.prenom AS prenomProfesseur
+    FROM programmation
+    JOIN cours ON programmation.cours = cours.id
+    JOIN professeurs ON programmation.professeur = professeurs.id
+    ORDER BY programmation.id DESC LIMIT 5");
+    $CoursProgrammes = $programmation->fetchAll(); 
+
+}
 ?>
 
 
@@ -18,6 +38,39 @@ $message = isset($_GET['message']) ? $_GET['message'] : '';
     <title>Cours - Programmation</title>
     <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    function displayDetails(id) {
+        // Sélectionne la ligne de détails correspondante avec l'ID correspondante
+        const detailsRow = document.querySelector(`#details-${id}`);
+
+        let XMLHttp = new XMLHttpRequest();
+        XMLHttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                detailsRow.innerHTML = this.responseText;
+
+                // Cache toutes les autres lignes de détails
+                document.querySelectorAll('.details-row').forEach(row => {
+                    if (row !== detailsRow) {
+                        row.style.display = 'none'; // Cache les autres lignes de détails
+                    }
+                });
+
+                // Alterne l'affichage de la ligne de détails cliquée
+                if (detailsRow.style.display === 'table-row') {
+                    detailsRow.style.display = 'none'; // Cache si elle est déjà affichée
+                } else {
+                    detailsRow.style.display = 'table-row'; // Affiche si elle est cachée
+                    detailsRow.classList.add('fade-in'); // Ceci nous permet d'afficher le détail avec une animation
+                }
+
+                console.log(this.responseText); // JUSTE POUR LE DEBOGAGE : Affiche la réponse dans la console
+            }
+        };
+
+        XMLHttp.open("GET", "HttpRequest.php?id=" + id, true);
+        XMLHttp.send();
+    }
+    </script>
     <link rel="stylesheet" href="./style.css?v=<?php echo time(); ?>">
 </head>
 
@@ -35,8 +88,12 @@ $message = isset($_GET['message']) ? $_GET['message'] : '';
         timer: 1500
     });
     </script>
-    <?php endif; ?>
-    <div style="min-height: 50vh !important;" class="container d-flex align-items-start justify-content-center mt-5">
+    <?php
+        unset($_SESSION['message']); // Détruire le message apprès affichage pour eviter qu'elle n'arrête de s'afficher à chaque fois qu'on actualise la page
+        endif;
+    ?>
+    <div style="min-height: 50vh !important;"
+        class="custom-container d-flex align-items-start justify-content-center mt-5">
         <div class="row border p-3 bg-white shadow w-100">
             <table id="t_article" class="table table-striped w-100">
                 <thead>
@@ -56,46 +113,24 @@ $message = isset($_GET['message']) ? $_GET['message'] : '';
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach( $CoursProgrammes as $CoursProgramme): ?>
                     <tr style="position:relative; z-index:1;">
-                        <td> INF1325</td>
-                        <td>INFORMATIQUE</td>
-                        <td>3 Crédits / 30H</td>
-                        <td>2024-10-23</td>
-                        <td class="options">
-                            <button type="button" class='btn btn-outline-primary btn-xs rounded-0'
-                                id="display-details">Details</button>
+                        <td><?= $CoursProgramme['code'] ?></td>
+                        <td><?= $CoursProgramme['cours'] ?></td>
+                        <td><?= $CoursProgramme['credits'] ?> Crédits / <?= $CoursProgramme['credits'] ?>0H</td>
+                        <td><?= $CoursProgramme['date'] ?></td>
+                        <td class="options d-flex justify-content-end">
+                            <button type="button" class='btn btn-outline-primary btn-xs rounded-0 me-1'
+                                id="display-details"
+                                onclick="displayDetails(<?= $CoursProgramme['id'] ?>);">Details</button>
                             <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-                            <a class='btn btn-warning btn-xs rounded-0'>Modifier</a>
-                            <a class='btn btn-danger btn-xs rounded-0'>Déprogrammer</a>
+                            <a class='btn btn-warning btn-xs rounded-0 me-1'>Modifier</a>
+                            <a class='btn btn-danger btn-xs rounded-0 me-1'>Déprogrammer</a>
                             <?php endif;?>
                         </td>
                     </tr>
-                    <tr class="details-row" id="details">
-                        <td colspan="1"
-                            style="background-color:#8cd1ff; border-left: 2px blue solid ; border-bottom: 2px blue solid ;">
-                            <div class="details-block">
-                                Enseignant: <br> <span class="details-text-color">Dr. TIEBEKABE</span>
-                            </div>
-                        </td>
-                        <td colspan="1" style="background-color:#8cd1ff; border-bottom: 2px blue solid ;">
-                            <div class="details-block">
-                                Heure de cours: <br> <span class="details-text-color">7H00</span>
-                            </div>
-                        </td>
-                        <td colspan="1" style="background-color:#8cd1ff; border-bottom: 2px blue solid ;">
-                            <div class="details-block">
-                                Type: <br> <span class="details-text-color">Présentiel</span>
-                            </div>
-                        </td>
-                        <td colspan="2"
-                            style="background-color:#8cd1ff; border-right: 2px blue solid ; border-bottom: 2px blue solid ;">
-                            <div class="details-block">
-                                Description: <br> <span class="details-text-color">Détails sur le cours INF2345 :
-                                    Algorithmes avancés, tri, recherche,
-                                    etc.</span>
-                            </div>
-                        </td>
-                    </tr>
+                    <tr class="details-row" id="details-<?= $CoursProgramme['id'] ?>"></tr>
+                    <?php endforeach;?>
                 </tbody>
             </table>
         </div>
@@ -103,6 +138,7 @@ $message = isset($_GET['message']) ? $_GET['message'] : '';
 
 
     <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!--
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const detailButtons = document.querySelectorAll('#display-details');
@@ -131,6 +167,7 @@ $message = isset($_GET['message']) ? $_GET['message'] : '';
         });
     });
     </script>
+    -->
 </body>
 
 </html>
