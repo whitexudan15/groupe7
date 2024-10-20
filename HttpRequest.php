@@ -12,7 +12,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
         professeurs.prenom AS prenomProfesseur
     FROM programmation
     JOIN cours ON programmation.cours = cours.id
-    JOIN professeurs ON programmation.professeur = professeurs.id
+    JOIN professeurs ON cours.professeur = professeurs.id
     WHERE programmation.id = $id;
     ");
 

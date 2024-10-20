@@ -8,20 +8,19 @@ if (!isset($_SESSION['auth'])) {
     $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
 
     // Fetch les cours programmées dans la base de donnees
-    $programmation = $pdo->query("SELECT
-        programmation.id, 
+    $programmation = $pdo->query("SELECT 
+        programmation.id,
         programmation.cours AS code,
         programmation.date,
         programmation.heure,
-        programmation.type,
         programmation.description,
-        cours.cours AS cours,
+        cours.nom AS cours,
         cours.credits,
         professeurs.nom AS nomProfesseur,
-        professeurs.prenom AS prenomProfesseur
+        professeurs.prenom AS nomProfesseur
     FROM programmation
     JOIN cours ON programmation.cours = cours.id
-    JOIN professeurs ON programmation.professeur = professeurs.id
+    JOIN professeurs ON cours.professeur = professeurs.id   
     ORDER BY programmation.id DESC LIMIT 5");
     $CoursProgrammes = $programmation->fetchAll(); 
 
@@ -106,7 +105,8 @@ if (!isset($_SESSION['auth'])) {
                             <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
 
                             <a style="background-color: blue !important; color: #e0ffff;"
-                                class='btn btn-outline-primary btn-xs rounded-0'>Programmer un nouveau cours</a>
+                                class='btn btn-outline-primary btn-xs rounded-0'
+                                href="./Programmer_Un_Cours.php">Programmer un nouveau cours</a>
 
                             <?php endif;?>
                         </th>
@@ -124,7 +124,7 @@ if (!isset($_SESSION['auth'])) {
                                 id="display-details"
                                 onclick="displayDetails(<?= $CoursProgramme['id'] ?>);">Details</button>
                             <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-                            <a class='btn btn-warning btn-xs rounded-0 me-1'>Modifier</a>
+                            <a class='btn btn-warning btn-xs rounded-0 me-1' href="./Modifier_Un_Cours.php">Modifier</a>
                             <a class='btn btn-danger btn-xs rounded-0 me-1'>Déprogrammer</a>
                             <?php endif;?>
                         </td>

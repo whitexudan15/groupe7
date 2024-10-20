@@ -136,8 +136,9 @@ $message = ''; //Variables de message de success
                             <input type="text" name="prenom" class="form-control form-control-lg bg-light fs-6"
                                 placeholder="Prenom">
                         </div>
-                        <div class="input-group">
-                            <input type="hidden" name="role" value="user">
+                        <div class="input-group mb-3">
+                            <input type="hidden" class="form-control form-control-lg bg-light fs-6" name="role"
+                                value="user">
                         </div>
                         <div class="input-group mb-3">
                             <input type="password" name="mdp" class="form-control form-control-lg bg-light fs-6"

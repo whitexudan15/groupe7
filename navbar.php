@@ -29,26 +29,16 @@ if (isset($_POST['deconnecter'])) {
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center">
-                <!--
-                <li class="nav-item">
-                    <a style="font-weight: 500;" class="nav-link text-white active" aria-current="page"
-                        href="./Connexion.php">Se connecter</a>
-                </li>
--->
                 <?php if(isset($_SESSION['auth'])): ?>
                 <li class="nav-item">
-                    <a class="nav-link text-white d-flex align-items-center" href="#">
-                        <!--
-                        <h5 style="font-weight: 800; padding:6px 5px 0px 0px;"><?=$_SESSION['nom']?>
-                            <?=$_SESSION['prenom']?>
-                        </h5>
-                -->
+                    <a class="profil nav-link text-white d-flex align-items-center" href="./profil.php">
                         <div
                             style="width: 50px; height: 50px; border-radius: 50%; border: 3px #e0ffff solid; background: transparent; overflow:hidden;">
                             <img src="./profils/<?=$_SESSION['profil']?>" class="img-fluid" alt="profil"
                                 style="background: white;">
                         </div>
                     </a>
+
                 </li>
                 <li class="nav-item">
                     <form action="" method="post">

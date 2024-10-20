@@ -38,28 +38,36 @@ if (!isset($_SESSION['auth'])) {
                 <div class="col-md-6 right-box">
                     <div class="row align-items-center">
                         <div class="input-group mb-3">
-                            <input type="text" name="cours" class="form-control form-control-lg bg-light fs-6"
-                                placeholder="Cours">
+                            <label class="input-group-text" for="typeSelect">Cours</label>
+                            <select name="cours" class="form-select form-control form-control-lg bg-light fs-6"
+                                id="typeSelect">
+                                <option value="" selected disabled>Choisir</option>
+                                <option value="INF13255">Programmation web côté serveur</option>
+                                <option value="INF13254">Algorithme Avancé</option>
+                                <option value="INF13251">Concepts et fondamentaux de la sécurité</option>
+                                <option value="INF13250">Principes des systèmes d'exploitation</option>
+                                <option value="INF13252">Services réseaux informatiques et ToIP</option>
+                                <option value="INF13257">Base de données avancée</option>
+                                <option value="INF14255">Infographie et multimédia</option>
+                                <option value="INF14254">Développement d'applications mobiles</option>
+                                <option value="INF14250">Administration systèmes et réseaux</option>
+                                <option value="MTH11251">Algèbre Linéaire</option>
+                            </select>
                         </div>
                         <div class="input-group mb-3">
-                            <input type="text" name="professeur" class="form-control form-control-lg bg-light fs-6"
-                                placeholder="Chargé Du Cours">
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="date" name="date" class="form-control form-control-lg bg-light fs-6"
-                                placeholder="Date (0000-00-00)">
+                            <input type="date" name="date" class="form-control form-control-lg bg-light fs-6">
                         </div>
                         <div class="input-group mb-3">
                             <input type="text" name="heure" class="form-control form-control-lg bg-light fs-6"
                                 placeholder="Heure (00:00:00)">
                         </div>
                         <div class="input-group mb-3">
-                            <label class="input-group-text" for="typeSelect">Choisir</label>
+                            <label class="input-group-text" for="typeSelect">Type</label>
                             <select name="type" class="form-select form-control form-control-lg bg-light fs-6"
                                 id="typeSelect">
-                                <option selected disabled>Type</option>
+                                <option value="" selected disabled>Choisir</option>
                                 <option value="P">P (Présentiel)</option>
-                                <option value="L">L (En ligne)</option>
+                                <option value="L">L (En Ligne)</option>
                             </select>
                         </div>
                         <div class="input-group mb-4">
@@ -70,7 +78,7 @@ if (!isset($_SESSION['auth'])) {
 
 
                         <div class="input-group">
-                            <button name="action" value="modifier"
+                            <button name="action" value="programmer"
                                 class="btn btn-lg btn-primary w-100 fs-6">Valider</button>
                         </div>
                     </div>

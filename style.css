@@ -128,6 +128,14 @@ body {
   z-index: 0; /* Mettre derrière le tr principal */
 }
 
+.nav-item:hover a {
+  border-bottom: 3px solid white;
+}
+
+.profil:hover {
+  border-bottom: none !important;
+}
+
 table,
 th,
 td {
