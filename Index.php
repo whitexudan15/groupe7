@@ -141,8 +141,3 @@ if (!isset($_SESSION['auth'])) {
 </body>
 
 </html>
-
-<!--
-
-
--->
