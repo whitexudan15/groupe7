@@ -124,7 +124,8 @@ if (!isset($_SESSION['auth'])) {
                                 id="display-details"
                                 onclick="displayDetails(<?= $CoursProgramme['id'] ?>);">Details</button>
                             <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-                            <a class='btn btn-warning btn-xs rounded-0 me-1' href="./Modifier_Un_Cours.php">Modifier</a>
+                            <a class='btn btn-warning btn-xs rounded-0 me-1'
+                                href="./Modifier_Un_Cours.php?id=<?= $CoursProgramme['id'] ?>">Modifier</a>
                             <a class='btn btn-danger btn-xs rounded-0 me-1'>Déprogrammer</a>
                             <?php endif;?>
                         </td>
@@ -135,7 +136,6 @@ if (!isset($_SESSION['auth'])) {
             </table>
         </div>
     </div>
-
 
     <script src="./bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
