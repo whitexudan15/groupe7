@@ -6,6 +6,7 @@ if (!isset($_SESSION['auth'])) {
     exit();
 }else {
     $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
+    $supprimer = isset($_SESSION['deprogrammer']) ? $_SESSION['deprogrammer'] : '';
 
     // Fetch les cours programmées dans la base de donnees
     $programmation = $pdo->query("SELECT 
@@ -84,11 +85,24 @@ if (!isset($_SESSION['auth'])) {
         text: <?php echo json_encode($message); ?>,
         customClass: 'custom-swal2',
         showConfirmButton: false,
-        timer: 1500
+        timer: 3000
     });
     </script>
-    <?php
-        unset($_SESSION['message']); // Détruire le message apprès affichage pour eviter qu'elle n'arrête de s'afficher à chaque fois qu'on actualise la page
+    <?php unset($_SESSION['message']); // Détruire le message apprès affichage pour eviter qu'elle n'arrête de s'afficher à chaque fois qu'on actualise la page
+        endif;
+    ?>
+    <?php if ($supprimer): ?>
+    <script>
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        text: <?php echo json_encode($supprimer); ?>,
+        customClass: 'custom-swal',
+        showConfirmButton: false,
+        timer: 3000
+    });
+    </script>
+    <?php unset($_SESSION['deprogrammer']); // Détruire le message apprès affichage pour eviter qu'elle n'arrête de s'afficher à chaque fois qu'on actualise la page
         endif;
     ?>
     <div style="min-height: 50vh !important;"
@@ -126,7 +140,8 @@ if (!isset($_SESSION['auth'])) {
                             <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
                             <a class='btn btn-warning btn-xs rounded-0 me-1'
                                 href="./Modifier_Un_Cours.php?id=<?= $CoursProgramme['id'] ?>">Modifier</a>
-                            <a class='btn btn-danger btn-xs rounded-0 me-1'>Déprogrammer</a>
+                            <a class='btn btn-danger btn-xs rounded-0 me-1'
+                                href="./Deprogrammer_Un_Cours.php?id=<?=$CoursProgramme['id']?>">Déprogrammer</a>
                             <?php endif;?>
                         </td>
                     </tr>

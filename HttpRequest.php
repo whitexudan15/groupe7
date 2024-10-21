@@ -17,6 +17,10 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     ");
 
     $DetailsCoursProgramme = $programmation->fetch();
+
+    // Formatter l'heure pour afficher par exemple 07H00 au lieu de 07:00:00
+    list($h, $m, $s) = explode(":", $DetailsCoursProgramme['heure']);
+    
 ?>
 
 <td colspan="1" style="background-color:#8cd1ff;">
@@ -27,7 +31,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 </td>
 <td colspan="1" style="background-color:#8cd1ff;">
     <div class="details-block">
-        Heure de cours: <br> <span class="details-text-color"><?= $DetailsCoursProgramme['heure'] ?></span>
+        Heure de cours: <br> <span class="details-text-color"><?=$h?>H<?=$m?></span>
     </div>
 </td>
 <td colspan="1" style="background-color:#8cd1ff;">

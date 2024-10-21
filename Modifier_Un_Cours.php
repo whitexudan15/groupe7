@@ -10,6 +10,7 @@ if (!isset($_SESSION['auth'])) {
 
     $requete = $pdo->query("SELECT * FROM programmation WHERE id = $cours_a_modifier_id");
     $cours_a_modifier = $requete->fetch();
+
 }
 ?>
 
@@ -33,7 +34,7 @@ if (!isset($_SESSION['auth'])) {
 
 <body>
     <?php require_once './navbar.php' ?>
-    <form action="" method="post">
+    <form action="./Action.php" method="post">
         <div style="min-height: 90vh !important;"
             class="login-container d-flex justify-content-center align-items-center">
             <div class="row border rounded-5 p-3 bg-white shadow box-area">
@@ -51,6 +52,10 @@ if (!isset($_SESSION['auth'])) {
                 <!--- Right Box --->
                 <div class="col-md-6 right-box">
                     <div class="row align-items-center">
+                        <div class="input-group mb-3">
+                            <input type="hidden" name="id" value="<?= $cours_a_modifier['id'] ?>"
+                                class="form-control form-control-lg bg-light fs-6">
+                        </div>
                         <div class="input-group mb-3">
                             <label class="input-group-text" for="typeSelect">Cours</label>
                             <select name="cours" class="form-select form-control form-control-lg bg-light fs-6"
@@ -112,12 +117,12 @@ if (!isset($_SESSION['auth'])) {
                         </div>
                         <div class="input-group mb-4">
                             <textarea name="description" class="form-control form-control-lg bg-light fs-6"
-                                id="exampleTextarea" placeholder="Description du cours ici..."
+                                id="exampleTextarea" maxlength="85" placeholder="Description ici(max 85 Caractères)..."
                                 style="height: 100px;"> <?= $cours_a_modifier['description'] ?> </textarea>
                         </div>
 
                         <div class="input-group">
-                            <button name="action" value="programmer"
+                            <button name="action" value="modifier"
                                 class="btn btn-lg btn-primary w-100 fs-6">Modifier</button>
                         </div>
                     </div>

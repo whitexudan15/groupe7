@@ -2,7 +2,6 @@
 session_start();
 require_once("./Base_De_Donnees.php");
 $error = '';
-$message = isset($_GET['message']) ? $_GET['message'] : ''; // Récupérer le message de success
 
 if (isset($_POST["connecter"])) {
     // Validation des champs du formulaire
@@ -63,12 +62,12 @@ if (isset($_POST["connecter"])) {
         <div style="min-height: 90vh;" class="login-container d-flex justify-content-center align-items-center">
             <div class="row">
                 <!--Affichage du popup d'erreur-->
-                <?php if ($message): ?>
+                <?php if (isset($_SESSION['message'])): ?>
                 <script>
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
-                    text: <?php echo json_encode($message); ?>,
+                    text: <?php echo json_encode($_SESSION['message']); ?>,
                     customClass: 'custom-swal2',
                     backdrop: `rgb(26, 26, 174, 0.95)
                     center
@@ -77,7 +76,7 @@ if (isset($_POST["connecter"])) {
                 </script>
                 <div class="" style="color:green; margin: 5px;margin-top: 15px; font-weight: 600;">
                     <p class="text-center">
-                        <?php echo $message . "<br> Connectez-vous!"; ?>
+                        <?php echo $_SESSION['message'] . "<br> Connectez-vous!"; unset( $_SESSION["message"] ); ?>
                     </p>
                 </div>
                 <?php elseif($error): ?>

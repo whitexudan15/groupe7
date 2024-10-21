@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `programmation` (
   `date` date NOT NULL,
   `heure` time NOT NULL,
   `type` varchar(1) NOT NULL,
-  `description` varchar(45) NOT NULL,
+  `description` varchar(85) NOT NULL,
   PRIMARY KEY (`id`,`cours`),
   KEY `fk_cours` (`cours`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -113,8 +113,7 @@ CREATE TABLE IF NOT EXISTS `programmation` (
 --
 
 INSERT INTO `programmation` (`cours`, `date`, `heure`, `type`, `description`) VALUES
-('INF13252', '2024-10-15', '07:00:00', 'P', 'Le cours de Services Réseaux'),
-('INF13254', '2024-10-23', '13:00:00', 'P', 'Description du cours ici');
+('INF13252', '2024-10-15', '07:00:00', 'P', 'Le cours de Services Réseaux');
 
 -- --------------------------------------------------------
 
