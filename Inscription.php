@@ -14,8 +14,9 @@ if (isset($_POST["inscrire"])) {
     $mdp = isset($_POST["mdp"]) ? password_hash($_POST["mdp"], PASSWORD_DEFAULT) : '';
     $profil = $_FILES["profil"]; // Récupérer le fichier
 
-    if (!empty($email) && preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $email)){
-        if (!empty($nom) && !empty($prenom) && !empty($mdp) && !empty($role) && !empty($profil)){
+    
+    if (!empty($email) && !empty($nom) && !empty($prenom) && !empty($mdp) && !empty($role) && !empty($profil)){
+        if (preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $email)){
             # code...
             $target_dir = "./profils/"; //Dossier parent pour stocker les profils des utilisateurs
             $target_file = $target_dir . basename($profil['name']);
@@ -24,43 +25,44 @@ if (isset($_POST["inscrire"])) {
     
             // Verifier si le fichier chargé est une image
             $check = getimagesize($profil['tmp_name']);
-    
-            if ($check === false) {
+            
+            //Verifer si l'User existe déjà sur le site
+            $checkIfUserIsAlreadyExists = $pdo->prepare('SELECT email FROM utilisateurs WHERE email = ?');
+            $checkIfUserIsAlreadyExists->execute(array($email));
+            if ($checkIfUserIsAlreadyExists->rowCount() == 0) {
+               // Contrôler le fichier
+                if ($check === false) {
                 $uploadOk = 0;
                 $error = "Le fichier n'est pas une image.";
-            }elseif (file_exists($target_file)) {
-                # code...
-                $uploadOk = 0;
-                $error = "Ooops! Image déjà existante.";
-            }elseif ($profil['size'] > 500000) {
-                # code...
-                $uploadOk = 0;
-                $error = "Ooops! L'image dépasse 500Ko.";
-            }
-            
-            if ($uploadOk === 0){
-                $error = $error . "<br> Téléchargement de profil échoué...";
-            } elseif (move_uploaded_file($profil['tmp_name'], $target_file)) {
-                //Verifer si l'User existe déjà sur le site
-                $checkIfUserIsAlreadyExists = $pdo->prepare('SELECT email FROM utilisateurs WHERE email = ?');
-                $checkIfUserIsAlreadyExists->execute(array($email));
-                if ($checkIfUserIsAlreadyExists->rowCount() == 0) {
+                }elseif (file_exists($target_file)) {
+                    # code...
+                    $uploadOk = 0;
+                    $error = "Ooops! Image déjà existante.";
+                }elseif ($profil['size'] > 500000) {
+                    # code...
+                    $uploadOk = 0;
+                    $error = "Ooops! L'image dépasse 500Ko.";
+                }
+
+                if ($uploadOk === 0){
+                    $error = $error . "<br> Téléchargement de profil échoué...";
+                } elseif (move_uploaded_file($profil['tmp_name'], $target_file)) {
                     $query = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, email, role, profil, mdp) VALUES (?, ?, ?, ?, ?, ?)");
                     $query->execute([$nom, $prenom, $email, $role, basename($profil['name']), $mdp]); 
                     $_SESSION['message'] = "Inscription reussie!";
                     header("Location: Connexion.php");
-                }else{
-                    $error = "Un Compte existe avec cet Email";
                 }
+            }else{
+                $error = "Un Compte existe déjà avec cet Email";
             }
-            
-        }else {
+        }else{
+            $error = "Format Email Incorrect";
+        }
+    }else {
             # code...
             $error = "Veuillez remplir tous les champs";
         }
-    }else{
-        $error = "Format Email Incorrect";
-    }
+    
     
 }
 

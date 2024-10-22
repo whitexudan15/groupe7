@@ -9,31 +9,35 @@ if (isset($_POST["connecter"])) {
     $mdp = isset($_POST["mdp"]) ? htmlspecialchars($_POST["mdp"]) : '';
 
     if (!empty($email) && !empty($mdp)){
-        //Vérifier si l'utilisateur existe
-        $checkIfUserExists = $pdo->prepare("SELECT * FROM utilisateurs WHERE email = ?");
-        $checkIfUserExists->execute([$email]);
+        if (preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $email)){
+            //Vérifier si l'utilisateur existe
+            $checkIfUserExists = $pdo->prepare("SELECT * FROM utilisateurs WHERE email = ?");
+            $checkIfUserExists->execute([$email]);
 
-        if ($checkIfUserExists->rowCount() == 1) {
-            $infosUtilisateurs = $checkIfUserExists->fetch();
-            // Stockage d'informations sur l'utilisateur dans les sessions
+            if ($checkIfUserExists->rowCount() == 1) {
+                $infosUtilisateurs = $checkIfUserExists->fetch();
+                // Stockage d'informations sur l'utilisateur dans les sessions
 
-             //Vérifier  si le mot de pass est correct
-             if(password_verify($mdp, $infosUtilisateurs['mdp'])){
-                $_SESSION['auth'] = true;
-                $_SESSION['email'] = $infosUtilisateurs['email'];
-                $_SESSION['role'] = $infosUtilisateurs['role'];
-                $_SESSION['nom'] = $infosUtilisateurs['nom'];
-                $_SESSION['prenom'] = $infosUtilisateurs['prenom'];
-                $_SESSION['profil'] = $infosUtilisateurs['profil'];
-                $_SESSION['message'] = "Connecté"; // Le message de sucess à aficher à l'utilisateur
-                header('Location: index.php');
-                exit();
-            } else {
-                $error = "Mot de passe incorrect.";
+                //Vérifier  si le mot de pass est correct
+                if(password_verify($mdp, $infosUtilisateurs['mdp'])){
+                    $_SESSION['auth'] = true;
+                    $_SESSION['email'] = $infosUtilisateurs['email'];
+                    $_SESSION['role'] = $infosUtilisateurs['role'];
+                    $_SESSION['nom'] = $infosUtilisateurs['nom'];
+                    $_SESSION['prenom'] = $infosUtilisateurs['prenom'];
+                    $_SESSION['profil'] = $infosUtilisateurs['profil'];
+                    $_SESSION['message'] = "Connecté"; // Le message de sucess à aficher à l'utilisateur
+                    header('Location: index.php');
+                    exit();
+                } else {
+                    $error = "Mot de passe incorrect.";
+                }
+            }else {
+                # code...
+                $error = "Compte non reconnu : Email incorrect.";
             }
-        }else {
-            # code...
-            $error = "Email inconnu.";
+        }else{
+            $error = "Format Email incorrect.";
         }
     }else {
         # code...
