@@ -21,8 +21,10 @@ if (!isset($_SESSION['auth'])) {
             # code...
             $req = $pdo->prepare("INSERT INTO programmation (cours, date, heure, type, description) VALUES (?, ?, ?, ?, ?)");
             $req->execute([$code, $date, $heure, $type, $description]);
+
             $_SESSION['message'] = "Nouveau Cours Programmé";
             header("Location: ./Index.php");
+
             break;
             
         case 'modifier':

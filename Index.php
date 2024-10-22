@@ -71,6 +71,17 @@ if (!isset($_SESSION['auth'])) {
         XMLHttp.send();
     }
     </script>
+    <script>
+    function timeLeft() {
+        let XMLHttp = new XMLHttpRequest();
+        XMLHttp.onreadystatechange = function() {
+            document.getElementById("time-left").innerHTML = this.responseText;
+        };
+
+        XMLHttp.open("GET", "Programmer_Un_Cours.php", true);
+        XMLHttp.send();
+    }
+    </script>
     <link rel="stylesheet" href="./style.css?v=<?php echo time(); ?>">
 </head>
 
@@ -130,7 +141,11 @@ if (!isset($_SESSION['auth'])) {
                     <?php foreach( $CoursProgrammes as $CoursProgramme): ?>
                     <tr style="position:relative; z-index:1;">
                         <td><?= $CoursProgramme['code'] ?></td>
-                        <td><?= $CoursProgramme['cours'] ?></td>
+                        <td>
+                            <?php
+                                echo $CoursProgramme['cours'];
+                            ?>
+                        </td>
                         <td><?= $CoursProgramme['credits'] ?> Crédits / <?= $CoursProgramme['credits'] ?>0H</td>
                         <td><?= $CoursProgramme['date'] ?></td>
                         <td class="options d-flex justify-content-end">

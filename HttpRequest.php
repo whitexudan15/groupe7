@@ -42,7 +42,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 </td>
 <td colspan="2" style="background-color:#8cd1ff;">
     <div class="details-block">
-        Description: <br> <span class="details-text-color"><?= $DetailsCoursProgramme['description'] ?></span>
+        Description: <br> <span
+            class="details-text-color"><?php if (!empty($DetailsCoursProgramme['description'])) { echo $DetailsCoursProgramme['description']; }else{ echo "<p style='color: red;'>Aucune description</p>";} ?></span>
     </div>
 </td>
 
