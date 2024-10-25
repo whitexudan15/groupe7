@@ -24,8 +24,28 @@ if (!isset($_SESSION['auth'])) {
     JOIN professeurs ON cours.professeur = professeurs.id   
     ORDER BY programmation.id DESC LIMIT 5");
     $CoursProgrammes = $programmation->fetchAll(); 
-
 }
+
+function timeLeft($id) { // La fonction pour calculer la durée depuis  la programmation d'un cours.
+    if (isset($_SESSION['time-left'][$id])) {
+        $tempsEcoule = time() - $_SESSION['time-left'][$id];
+        
+        if ($tempsEcoule < 60) {
+            return "programmé il y'a $tempsEcoule s";
+        } elseif ($tempsEcoule < 3600) {
+            $minutes = floor($tempsEcoule / 60);
+            return "programmé il y'a $minutes m";
+        } elseif ($tempsEcoule < 86400) {
+            $heures = floor($tempsEcoule / 3600);
+            return "programmé il y'a $heures h";
+        } else {
+            $jours = floor($tempsEcoule / 86400);
+            return "programmé il y'a $jours jour";
+        }
+    }
+}
+
+
 ?>
 
 
@@ -68,17 +88,6 @@ if (!isset($_SESSION['auth'])) {
         };
 
         XMLHttp.open("GET", "HttpRequest.php?id=" + id, true);
-        XMLHttp.send();
-    }
-    </script>
-    <script>
-    function timeLeft() {
-        let XMLHttp = new XMLHttpRequest();
-        XMLHttp.onreadystatechange = function() {
-            document.getElementById("time-left").innerHTML = this.responseText;
-        };
-
-        XMLHttp.open("GET", "Programmer_Un_Cours.php", true);
         XMLHttp.send();
     }
     </script>
@@ -144,6 +153,7 @@ if (!isset($_SESSION['auth'])) {
                         <td>
                             <?php
                                 echo $CoursProgramme['cours'];
+                                echo " <small style='color: green;'>(" . timeLeft($CoursProgramme['id']) . ")</small>";
                             ?>
                         </td>
                         <td><?= $CoursProgramme['credits'] ?> Crédits / <?= $CoursProgramme['credits'] ?>0H</td>
