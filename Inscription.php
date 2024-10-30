@@ -98,15 +98,16 @@ if (isset($_POST["inscrire"])) {
                     title: 'Erreur',
                     text: <?php echo json_encode($error); ?>,
                     customClass: 'custom-swal',
-                    backdrop: `rgb(26, 26, 174, 0.95)
-                    center
-                    no-repeat`
+                    backdrop: `
+                        rgb(26, 26, 174, 0.95)
+                        center
+                        no-repeat
+                    `
                 });
                 </script>
-                <div class="" style="color:red; margin: 5px;margin-top: 15px; font-weight: 600;">
-                    <p class="text-center">
-                        <?php echo $error; ?>
-                    </p>
+                <div class="text-center"
+                    style="color:red; background-color: #ffc6c6; border: 1px solid red; border-radius: 10px; margin: 10px; font-weight: 600;">
+                    <small><?php echo $error ?></small>
                 </div>
                 <?php endif; ?>
 

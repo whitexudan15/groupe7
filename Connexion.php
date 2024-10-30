@@ -26,7 +26,7 @@ if (isset($_POST["connecter"])) {
                     $_SESSION['nom'] = $infosUtilisateurs['nom'];
                     $_SESSION['prenom'] = $infosUtilisateurs['prenom'];
                     $_SESSION['profil'] = $infosUtilisateurs['profil'];
-                    $_SESSION['message'] = "Connecté"; // Le message de sucess à aficher à l'utilisateur
+                    $_SESSION['message'] = "Bienvenue! " . $_SESSION['nom'] . " " . $_SESSION['prenom']; // Le message de sucess à aficher à l'utilisateur
                     header('Location: index.php');
                     exit();
                 } else {
@@ -67,6 +67,7 @@ if (isset($_POST["connecter"])) {
             <div class="row">
                 <!--Affichage du popup d'erreur-->
                 <?php if (isset($_SESSION['message'])): ?>
+                <?php if ($_SESSION['message'] == "Inscription reussie!"): ?>
                 <script>
                 Swal.fire({
                     icon: 'success',
@@ -78,10 +79,10 @@ if (isset($_POST["connecter"])) {
                     no-repeat`
                 });
                 </script>
-                <div class="" style="color:green; margin: 5px;margin-top: 15px; font-weight: 600;">
-                    <p class="text-center">
-                        <?php echo $_SESSION['message'] . "<br> Connectez-vous!"; unset( $_SESSION["message"] ); ?>
-                    </p>
+                <?php endif; ?>
+                <div class="text-center"
+                    style="color:green; background-color: #c2ffe0; margin: 10px; border: 1px solid green; border-radius: 10px; font-weight: 600;">
+                    <small><?php echo "Veuillez-vous connecter"; unset( $_SESSION["message"] ); ?></small>
                 </div>
                 <?php elseif($error): ?>
                 <script>
@@ -95,10 +96,9 @@ if (isset($_POST["connecter"])) {
                     no-repeat`
                 });
                 </script>
-                <div class="" style="color:red; margin: 5px;margin-top: 15px; font-weight: 600;">
-                    <p class="text-center">
-                        <?php echo $error ?>
-                    </p>
+                <div class="text-center"
+                    style="color:red; background-color: #ffc6c6; border: 1px solid red; border-radius: 10px; margin: 10px; font-weight: 600;">
+                    <small><?php echo $error ?></small>
                 </div>
                 <?php endif; ?>
 

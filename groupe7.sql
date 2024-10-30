@@ -108,13 +108,6 @@ CREATE TABLE IF NOT EXISTS `programmation` (
   KEY `fk_cours` (`cours`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Déchargement des données de la table `programmation`
---
-
-INSERT INTO `programmation` (`cours`, `date`, `heure`, `type`, `description`) VALUES
-('INF13252', '2024-10-15', '07:00:00', 'P', 'Le cours de Services Réseaux');
-
 -- --------------------------------------------------------
 
 --
@@ -135,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
 COMMIT;
 
 INSERT INTO `utilisateurs` (`nom`, `prenom`, `email`, `role`, `profil`, `mdp`) VALUES
-('admin', 'admin', 'admin@gmail.com', 'admin', 'admin_profil.png', '$2y$10$4iHhgBsxFaBw1maVI90ha.q.cisx.gpDDLDvQ5wUFIZyx37g713mK');
+('Admin', 'Admin', 'admin@gmail.com', 'admin', 'admin_profil.png', '$2y$10$4iHhgBsxFaBw1maVI90ha.q.cisx.gpDDLDvQ5wUFIZyx37g713mK');
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

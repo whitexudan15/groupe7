@@ -2,6 +2,7 @@
 require_once "./Base_De_Donnees.php";
 session_start();
 if (!isset($_SESSION['auth'])) {
+    $_SESSION['message'] = "Veuillez-vous connecter";
     header('Location: Connexion.php');
     exit();
 }else {
@@ -9,7 +10,7 @@ if (!isset($_SESSION['auth'])) {
     $supprimer = isset($_SESSION['deprogrammer']) ? $_SESSION['deprogrammer'] : '';
 
     // Fetch les cours programmées dans la base de donnees
-    $programmation = $pdo->query("SELECT 
+    $programmation = $pdo->query("SELECT
         programmation.id,
         programmation.cours AS code,
         programmation.date,
@@ -31,16 +32,16 @@ function timeLeft($id) { // La fonction pour calculer la durée depuis  la progr
         $tempsEcoule = time() - $_SESSION['time-left'][$id];
         
         if ($tempsEcoule < 60) {
-            return "programmé il y'a $tempsEcoule s";
+            return "(programmé il y'a $tempsEcoule s)";
         } elseif ($tempsEcoule < 3600) {
             $minutes = floor($tempsEcoule / 60);
-            return "programmé il y'a $minutes m";
+            return "(programmé il y'a $minutes m)";
         } elseif ($tempsEcoule < 86400) {
             $heures = floor($tempsEcoule / 3600);
-            return "programmé il y'a $heures h";
+            return "(programmé il y'a $heures h)";
         } else {
             $jours = floor($tempsEcoule / 86400);
-            return "programmé il y'a $jours jour";
+            return "(programmé il y'a $jours jour)";
         }
     }
 }
@@ -57,6 +58,8 @@ function timeLeft($id) { // La fonction pour calculer la durée depuis  la progr
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cours - Programmation</title>
     <link rel="stylesheet" type="text/css" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
     function displayDetails(id) {
@@ -105,7 +108,21 @@ function timeLeft($id) { // La fonction pour calculer la durée depuis  la progr
         text: <?php echo json_encode($message); ?>,
         customClass: 'custom-swal2',
         showConfirmButton: false,
-        timer: 3000
+        timer: 3000,
+        showClass: {
+            popup: `
+                animate__animated
+                animate__fadeInUp
+                animate__faster
+                `
+        },
+        hideClass: {
+            popup: `
+                animate__animated
+                animate__fadeOutDown
+                animate__faster
+            `
+        }
     });
     </script>
     <?php unset($_SESSION['message']); // Détruire le message apprès affichage pour eviter qu'elle n'arrête de s'afficher à chaque fois qu'on actualise la page
@@ -119,7 +136,21 @@ function timeLeft($id) { // La fonction pour calculer la durée depuis  la progr
         text: <?php echo json_encode($supprimer); ?>,
         customClass: 'custom-swal',
         showConfirmButton: false,
-        timer: 3000
+        timer: 3000,
+        showClass: {
+            popup: `
+                animate__animated
+                animate__fadeInUp
+                animate__faster
+                `
+        },
+        hideClass: {
+            popup: `
+                animate__animated
+                animate__fadeOutDown
+                animate__faster
+            `
+        }
     });
     </script>
     <?php unset($_SESSION['deprogrammer']); // Détruire le message apprès affichage pour eviter qu'elle n'arrête de s'afficher à chaque fois qu'on actualise la page
@@ -139,39 +170,65 @@ function timeLeft($id) { // La fonction pour calculer la durée depuis  la progr
                             <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
 
                             <a style="background-color: blue !important; color: #e0ffff;"
-                                class='btn btn-outline-primary btn-xs rounded-0'
-                                href="./Programmer_Un_Cours.php">Programmer un nouveau cours</a>
+                                class='btn btn-outline-primary btn-xs rounded-0' href="./Programmer_Un_Cours.php"> <i
+                                    class="fas fa-calendar-plus" title="Programmer"></i> Programmer un nouveau cours</a>
 
                             <?php endif;?>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?php if ($programmation->rowCount() > 0): ?>
                     <?php foreach( $CoursProgrammes as $CoursProgramme): ?>
                     <tr style="position:relative; z-index:1;">
                         <td><?= $CoursProgramme['code'] ?></td>
                         <td>
                             <?php
                                 echo $CoursProgramme['cours'];
-                                echo " <small style='color: green;'>(" . timeLeft($CoursProgramme['id']) . ")</small>";
+                                echo " <small style='color: green;'>" . timeLeft($CoursProgramme['id']) . "</small>";
                             ?>
                         </td>
                         <td><?= $CoursProgramme['credits'] ?> Crédits / <?= $CoursProgramme['credits'] ?>0H</td>
                         <td><?= $CoursProgramme['date'] ?></td>
                         <td class="options d-flex justify-content-end">
                             <button type="button" class='btn btn-outline-primary btn-xs rounded-0 me-1'
-                                id="display-details"
-                                onclick="displayDetails(<?= $CoursProgramme['id'] ?>);">Details</button>
+                                id="display-details" onclick="displayDetails(<?= $CoursProgramme['id'] ?>);"><i
+                                    class="fas fa-eye" title="Voir les détails"></i> Détails</button>
                             <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-                            <a class='btn btn-warning btn-xs rounded-0 me-1'
-                                href="./Modifier_Un_Cours.php?id=<?= $CoursProgramme['id'] ?>">Modifier</a>
-                            <a class='btn btn-danger btn-xs rounded-0 me-1'
-                                href="./Deprogrammer_Un_Cours.php?id=<?=$CoursProgramme['id']?>">Déprogrammer</a>
+                            <a class='btn btn-warning btn-xs rounded-0 me-1' id="modifier"
+                                href="./Modifier_Un_Cours.php?id=<?= $CoursProgramme['id'] ?>"><i
+                                    class="fas fa-pencil-alt" title="Modifier"></i> Modifier</a>
+                            <button class='btn btn-danger btn-xs rounded-0 me-1' onclick="
+                                Swal.fire({
+                                    title: 'Êtes-vous sûr ?',
+                                    text: 'Action irréversible!',
+                                    icon: 'warning',
+                                    customClass: 'custom-swal',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#d33',
+                                    cancelButtonColor: '#3085d6',
+                                    confirmButtonText: 'Confirmer',
+                                    cancelButtonText: 'Annuler'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href = './Deprogrammer_Un_Cours.php?id=<?=$CoursProgramme['id']?>';
+                                    }
+                                });
+                            ">
+                                <i class="fas fa-trash-alt" title="Supprimer"></i> Déprogrammer</button>
                             <?php endif;?>
                         </td>
+
                     </tr>
                     <tr class="details-row" id="details-<?= $CoursProgramme['id'] ?>"></tr>
                     <?php endforeach;?>
+                    <?php else: ?>
+                    <tr>
+                        <td colspan="5" style="text-align: center;">
+                            <b>Aucun cours programmé pour l' instant...</b>
+                        </td>
+                    </tr>
+                    <?php endif;?>
                 </tbody>
             </table>
         </div>

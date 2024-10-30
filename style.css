@@ -123,6 +123,14 @@ body {
   -webkit-animation: fadeIn 1s forwards;
 }
 
+.trans {
+  transition: all 1s ease;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  -o-transition: all 1s ease;
+}
+
 .details-row {
   position: relative; /* Position relative pour pouvoir utiliser z-index */
   z-index: 0; /* Mettre derrière le tr principal */
