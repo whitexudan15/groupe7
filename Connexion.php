@@ -34,7 +34,7 @@ if (isset($_POST["connecter"])) {
                 }
             }else {
                 # code...
-                $error = "Compte non reconnu : Email incorrect.";
+                $error = "Ce compte n'existe pas";
             }
         }else{
             $error = "Format Email incorrect.";
