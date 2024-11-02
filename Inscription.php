@@ -20,8 +20,6 @@ if (isset($_POST["inscrire"])) {
             # code...
             $target_dir = __DIR__ . DIRECTORY_SEPARATOR . "profils" . DIRECTORY_SEPARATOR;
             $target_file = $target_dir . basename($profil['name']);
-
-            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
     
             // Verifier si le fichier chargé est une image
             $check = getimagesize($profil['tmp_name']);
