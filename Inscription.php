@@ -31,13 +31,13 @@ if (isset($_POST["inscrire"])) {
             if ($checkIfUserIsAlreadyExists->rowCount() == 0) {
                // Contrôler le fichier
                 if ($check === false) {
-                    $error = "Le fichier n'est pas une image...Reéssayez!";
+                    $error = "Le fichier n'est pas une image...Veuillez reéssayez!";
                 }elseif (file_exists($target_file)) {
                     # code...
-                    $error = "Ooops! Image déjà existante...Reéssayez!";
+                    $error = "Erreur! Image déjà existante...Veuillez reéssayez!";
                 }elseif ($profil['size'] > 500000) {
                     # code...
-                    $error = "Ooops! L'image dépasse 500Ko...Reéssayez!";
+                    $error = "Erreur! L'image dépasse 500Ko...Veuillez reéssayez!";
                 }else{
                     if (move_uploaded_file($profil['tmp_name'], $target_file)) {
                         $query = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, email, role, profil, mdp) VALUES (?, ?, ?, ?, ?, ?)");
@@ -45,7 +45,7 @@ if (isset($_POST["inscrire"])) {
                         $_SESSION['message'] = "Inscription reussie!";
                         header("Location: Connexion.php");
                     }else{
-                        $error = "Ooops! Echec de téléchargement de l'image.";
+                        $error = "Erreur! Echec de téléchargement de l'image.";
                     }
                 }
             }else{
