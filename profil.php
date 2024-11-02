@@ -6,8 +6,6 @@ if (!isset($_SESSION['auth'])) {
 }
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
