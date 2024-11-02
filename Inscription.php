@@ -18,9 +18,9 @@ if (isset($_POST["inscrire"])) {
     if (!empty($email) && !empty($nom) && !empty($prenom) && !empty($mdp) && !empty($role) && !empty($profil)){
         if (preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $email)){
             # code...
-            $target_dir = "./profils/"; //Dossier parent pour stocker les profils des utilisateurs
+            $target_dir = __DIR__ . DIRECTORY_SEPARATOR . "profils" . DIRECTORY_SEPARATOR;
             $target_file = $target_dir . basename($profil['name']);
-            $uploadOk = 1;
+
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
     
             // Verifier si le fichier chargé est une image
@@ -29,41 +29,37 @@ if (isset($_POST["inscrire"])) {
             //Verifer si l'User existe déjà sur le site
             $checkIfUserIsAlreadyExists = $pdo->prepare('SELECT email FROM utilisateurs WHERE email = ?');
             $checkIfUserIsAlreadyExists->execute(array($email));
+
             if ($checkIfUserIsAlreadyExists->rowCount() == 0) {
                // Contrôler le fichier
                 if ($check === false) {
-                $uploadOk = 0;
-                $error = "Le fichier n'est pas une image.";
+                    $error = "Le fichier n'est pas une image...Reéssayez!";
                 }elseif (file_exists($target_file)) {
                     # code...
-                    $uploadOk = 0;
-                    $error = "Ooops! Image déjà existante.";
+                    $error = "Ooops! Image déjà existante...Reéssayez!";
                 }elseif ($profil['size'] > 500000) {
                     # code...
-                    $uploadOk = 0;
-                    $error = "Ooops! L'image dépasse 500Ko.";
-                }
-
-                if ($uploadOk === 0){
-                    $error = $error . "<br> Téléchargement de profil échoué...";
-                } elseif (move_uploaded_file($profil['tmp_name'], $target_file)) {
-                    $query = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, email, role, profil, mdp) VALUES (?, ?, ?, ?, ?, ?)");
-                    $query->execute([$nom, $prenom, $email, $role, basename($profil['name']), $mdp]); 
-                    $_SESSION['message'] = "Inscription reussie!";
-                    header("Location: Connexion.php");
+                    $error = "Ooops! L'image dépasse 500Ko...Reéssayez!";
+                }else{
+                    if (move_uploaded_file($profil['tmp_name'], $target_file)) {
+                        $query = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, email, role, profil, mdp) VALUES (?, ?, ?, ?, ?, ?)");
+                        $query->execute([$nom, $prenom, $email, $role, basename($profil['name']), $mdp]); 
+                        $_SESSION['message'] = "Inscription reussie!";
+                        header("Location: Connexion.php");
+                    }else{
+                        $error = "Ooops! Echec de téléchargement de l'image.";
+                    }
                 }
             }else{
                 $error = "Un Compte existe déjà avec cet Email";
             }
         }else{
-            $error = "Format Email Incorrect";
+            $error = "Email Incorrect";
         }
     }else {
-            # code...
-            $error = "Veuillez remplir tous les champs";
-        }
-    
-    
+        # code...
+        $error = "Veuillez remplir tous les champs";
+    }
 }
 
 ?>
@@ -161,15 +157,10 @@ if (isset($_POST["inscrire"])) {
                             <button name="inscrire" class="btn btn-lg btn-primary w-100 fs-6">S'inscrire</button>
                         </div>
                         <div class="row">
-                            <small class="text-center" style="font-weight: 600;">Vous avez déjà un compte ? <a
-                                    href="./Connexion.php">Se
-                                    Connecter</a></small>
+                            <small class="text-center" style="font-weight: 600;">Vous avez déjà un compte ? <a href="./Connexion.php">Se Connecter</a></small>
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         </div>
     </form>
