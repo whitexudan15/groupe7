@@ -11,6 +11,6 @@ Une Mini Apllication Web (PHP, AJAX)
 # ADMINISTRATEUR (Identifiant de connexion) :
 
            Email : admin@gmail.com
-             Nom : admin
-          Prenom : admin
+             Nom : Admin
+          Prenom : Admin
     Mot de Passe : admin
